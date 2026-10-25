@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101512">
+<title>L'ESSENTIEL — L'actualité, autrement</title>
+<style>
+:root {
+  --bg:#101512; --panel:#181f1b; --panel2:#202a24;
+  --text:#f1f5f1; --muted:#a1afa5; --mint:#9ee6c2;
+  --border:#2c3931; --radius:20px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Inter,system-ui,-apple-system,sans-serif;line-height:1.6}
+a{color:var(--mint)}
+button,input{font:inherit}
+button{cursor:pointer}
+header{position:sticky;top:0;z-index:5;background:#101512ed;
+backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav{max-width:1120px;margin:auto;padding:15px 20px;display:flex;
+align-items:center;justify-content:space-between;gap:15px}
+.logo{font-weight:900;letter-spacing:2px;font-size:19px}
+.logo span{color:var(--mint)}
+.nav a{font-size:13px;text-decoration:none;color:var(--muted);margin-left:14px}
+.wrap{max-width:1120px;margin:auto;padding:30px 20px 70px}
+.hero{padding:36px 0 28px}
+.eyebrow{color:var(--mint);text-transform:uppercase;letter-spacing:2px;
+font-size:11px;font-weight:800}
+h1{font-size:clamp(38px,7vw,68px);line-height:1.04;letter-spacing:-2px;
+margin:14px 0}
+h1 span{color:var(--mint)}
+h2{font-size:25px;letter-spacing:-.5px;margin:0}
+h3{font-size:18px;line-height:1.3;margin:10px 0}
+p{color:var(--muted)}
+.hero p{max-width:580px;font-size:16px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;
+flex-wrap:wrap;margin-top:24px}
+.pill,.filter{border:1px solid var(--border);border-radius:100px;
+padding:8px 13px;background:transparent;color:var(--muted);font-size:12px}
+.pill{color:var(--mint)}
+button.primary{background:var(--mint);color:#112017;border:0;border-radius:100px;
+padding:11px 16px;font-weight:800}
+button.secondary{background:var(--panel2);border:1px solid var(--border);
+color:var(--text);border-radius:100px;padding:10px 14px}
+.section{margin-top:38px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;
+gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
+.filter.active{background:var(--mint);color:#102017;border-color:var(--mint)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--border);
+border-radius:var(--radius);padding:20px;min-width:0;display:flex;flex-direction:column}
+.card.featured{grid-column:span 2;background:linear-gradient(140deg,#202f27,#171d19)}
+.tag{color:var(--mint);font-size:10px;text-transform:uppercase;
+letter-spacing:1.2px;font-weight:850}
+.card p{font-size:13px;margin:6px 0 18px}
+.card .bottom{display:flex;justify-content:space-between;align-items:center;
+gap:10px;margin-top:auto;padding-top:8px}
+.card small{color:var(--muted);font-size:11px}
+.read{background:none;border:0;color:var(--mint);padding:8px 0;font-weight:750;
+text-align:left}
+.goodgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.good{background:#17251d;border:1px solid #2b4535;border-radius:var(--radius);
+padding:20px}
+.good .emoji{font-size:25px}
+.good h3{font-size:16px}
+.good p{font-size:13px}
+.notice{background:var(--panel);border:1px solid var(--border);
+border-radius:14px;padding:13px;color:var(--muted);font-size:12px;margin-top:16px}
+.chatbox{border:1px solid var(--border);background:var(--panel);
+border-radius:var(--radius);overflow:hidden}
+.chathead{padding:18px;border-bottom:1px solid var(--border);display:flex;
+justify-content:space-between;gap:10px;align-items:center}
+.messages{padding:18px;min-height:160px;max-height:360px;overflow-y:auto}
+.msg{padding:12px 14px;border-radius:15px;background:var(--panel2);
+margin:0 0 10px;max-width:95%;font-size:13px;white-space:pre-wrap}
+.msg.user{margin-left:auto;background:#244334;color:#f1fff6}
+.chatform{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.chatform input{flex:1;min-width:0;border:1px solid var(--border);
+border-radius:100px;background:#101512;color:var(--text);padding:12px}
+footer{border-top:1px solid var(--border);padding:25px 20px;color:var(--muted);
+font-size:12px;text-align:center}
+.empty{color:var(--muted);padding:20px}
+dialog{background:var(--panel);color:var(--text);border:1px solid var(--border);
+border-radius:20px;width:min(600px,92vw);padding:24px}
+dialog::backdrop{background:#000b;backdrop-filter:blur(4px)}
+dialog p{white-space:pre-wrap}
+.close{float:right}
+@media(max-width:760px){
+ .grid,.goodgrid{grid-template-columns:1fr}
+ .card.featured{grid-column:auto}
+ .nav{padding:12px 15px}.nav a{margin-left:8px;font-size:12px}
+ .wrap{padding:20px 15px 55px}
+ h1{letter-spacing:-1.5px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo">L'<span>ESSENTIEL</span></div>
+    <nav>
+      <a href="#actualites">Actualités</a>
+      <a href="#positif">Positif</a>
+      <a href="#assistant">Poser une question</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Comprendre le monde, chaque jour</div>
+    <h1>L'actualité,<br><span>sans le bruit.</span></h1>
+    <p>Les sujets importants expliqués simplement, plusieurs points de vue et aussi les bonnes nouvelles. Pour comprendre, pas seulement faire défiler.</p>
+    <div class="topline">
+      <span class="pill" id="edition">Édition de démonstration</span>
+      <button class="primary" id="refresh">↻ Actualiser les sources</button>
+    </div>
+    <div class="notice" id="status">Chargement des flux d'actualité… Si un média bloque l'accès direct, les liens vers ses articles restent disponibles.</div>
+  </section>
+
+  <section class="section" id="actualites">
+    <div class="sectionhead">
+      <h2>À la une</h2>
+      <span class="pill" id="count">Sélection éditoriale</span>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter active" data-filter="Tout">Tout</button>
+      <button class="filter" data-filter="France">France</button>
+      <button class="filter" data-filter="Monde">Monde</button>
+      <button class="filter" data-filter="Sciences">Sciences</button>
+      <button class="filter" data-filter="Économie">Économie</button>
+    </div>
+    <div class="grid" id="news">
+      <div class="card featured">
+        <span class="tag">Préparation de l'édition</span>
+        <h3>Récupération des dernières actualités</h3>
+        <p>Les titres apparaîtront ici lorsque les flux des médias seront accessibles.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="positif">
+    <div class="sectionhead">
+      <h2>La dose de positif</h2>
+      <span class="pill">Les nouvelles qui font du bien</span>
+    </div>
+    <div class="goodgrid" id="goodnews">
+      <article class="good"><div class="emoji">🌱</div><h3>La science avance</h3><p>Retrouve des découvertes scientifiques dans les sources ci-dessous.</p><a href="https://www.science.org/news" target="_blank" rel="noopener">Explorer les découvertes ↗</a></article>
+      <article class="good"><div class="emoji">🌍</div><h3>Des solutions pour la planète</h3><p>Des initiatives et des recherches pour mieux protéger le vivant.</p><a href="https://news.un.org/fr/" target="_blank" rel="noopener">Lire les actualités de l'ONU ↗</a></article>
+      <article class="good"><div class="emoji">💡</div><h3>Des idées qui progressent</h3><p>Des projets et innovations qui tentent d'améliorer le quotidien.</p><a href="https://www.goodnewsnetwork.org/" target="_blank" rel="noopener">Découvrir des bonnes nouvelles ↗</a></article>
+    </div>
+  </section>
+
+  <section class="section" id="assistant">
+    <div class="sectionhead">
+      <h2>Comprendre une actualité</h2>
+      <span class="pill">Assistant de démonstration</span>
+    </div>
+    <div class="chatbox">
+      <div class="chathead"><div><strong>Ton assistant</strong><br><small style="color:var(--muted)">Pose une question sur l'actualité</small></div><span>✦</span></div>
+      <div class="messages" id="messages">
+        <div class="msg">Salut ! Je peux t'aider à comprendre les thèmes de l'actualité et te proposer des pistes de recherche. Pour l'instant, je ne suis pas connecté à un véritable modèle d'IA.</div>
+      </div>
+      <form class="chatform" id="chatform">
+        <input id="question" placeholder="Ex. Pourquoi y a-t-il des manifestations ?" autocomplete="off" required>
+        <button class="primary" type="submit">Envoyer</button>
+      </form>
+    </div>
+    <div class="notice">Transparence : cette version est un prototype gratuit dans un seul fichier. Les titres peuvent être chargés depuis des flux RSS publics si le navigateur et les médias autorisent les requêtes. Aucun flux ne garantit une actualisation en direct. Le chatbot n'est pas encore une IA générative.</div>
+  </section>
+
+  <section class="section">
+    <div class="sectionhead"><h2>Nos sources</h2></div>
+    <div class="card">
+      <p>Compare les informations, vérifie les dates et lis les articles originaux. Les médias peuvent présenter des angles différents.</p>
+      <p><a href="https://www.franceinfo.fr/" target="_blank" rel="noopener">Franceinfo ↗</a> · <a href="https://www.lemonde.fr/" target="_blank" rel="noopener">Le Monde ↗</a> · <a href="https://www.bbc.com/news" target="_blank" rel="noopener">BBC News ↗</a> · <a href="https://www.reuters.com/" target="_blank" rel="noopener">Reuters ↗</a> · <a href="https://news.un.org/fr/" target="_blank" rel="noopener">ONU ↗</a></p>
+    </div>
+  </section>
+</main>
+<footer>L'ESSENTIEL · S'informer pour mieux comprendre · Prototype personnel</footer>
+
+<dialog id="article">
+  <button class="secondary close" id="close">Fermer ✕</button>
+  <div class="tag" id="modalcat">ACTUALITÉ</div>
+  <h2 id="modaltitle" style="margin-top:12px"></h2>
+  <p id="modaldesc"></p>
+  <p><strong>Source :</strong> <span id="modalsource"></span></p>
+  <a id="modallink" href="#" target="_blank" rel="noopener">Lire l'article original ↗</a>
+</dialog>
+
+<script>
+const $ = id => document.getElementById(id);
+let allNews = [];
+let currentFilter = "Tout";
+
+const feeds = [
+  {name:"Franceinfo", url:"https://www.francetvinfo.fr/titres.rss", category:"France"},
+  {name:"Le Monde", url:"https://www.lemonde.fr/rss/une.xml", category:"France"},
+  {name:"BBC News", url:"https://feeds.bbci.co.uk/news/world/rss.xml", category:"Monde"},
+  {name:"ONU", url:"https://news.un.org/feed/subscribe/fr/news/all/rss.xml", category:"Monde"}
+];
+
+// Plusieurs proxys publics sont tentés car certains médias bloquent
+// les requêtes provenant directement d'une page web.
+const proxies = [
+  url => "https://api.allorigins.win/raw?url=" + encodeURIComponent(url),
+  url => "https://corsproxy.io/?url=" + encodeURIComponent(url)
+];
+
+function cleanText(value) {
+  const doc = new DOMParser().parseFromString(value || "", "text/html");
+  return (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+}
+
+function parseFeed(xml, feed) {
+  const doc = new DOMParser().parseFromString(xml, "text/xml");
+  if (doc.querySelector("parsererror")) throw new Error("Flux XML invalide");
+  const items = [...doc.querySelectorAll("item")];
+  const entries = items.length ? items : [...doc.querySelectorAll("entry")];
+  return entries.slice(0, 12).map(item => {
+    const linkEl = item.querySelector("link");
+    let link = linkEl?.textContent?.trim() || linkEl?.getAttribute("href") || "";
+    const title = cleanText(item.querySelector("title")?.textContent);
+    const description = cleanText(item.querySelector("description")?.textContent ||
+      item.querySelector("summary")?.textContent ||
+      item.querySelector("content\\:encoded")?.textContent);
+    const date = item.querySelector("pubDate")?.textContent ||
+      item.querySelector("published")?.textContent || "";
+    let category = feed.category;
+    const text = (title + " " + description).toLowerCase();
+    if (/science|recherche|espace|santé|climat|technolog|découverte/.test(text)) category = "Sciences";
+    else if (/économie|budget|emploi|entreprise|inflation|bourse/.test(text)) category = "Économie";
+    else if (/france|français|paris|elysée|assemblée/.test(text)) category = "France";
+    return {title, description:description.slice(0,600), link, date, source:feed.name, category};
+  }).filter(item => item.title && /^https?:\/\//i.test(item.link));
+}
+
+async function fetchFeed(feed) {
+  let lastError;
+  for (const proxy of proxies) {
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 9000);
+      const response = await fetch(proxy(feed.url), {signal:controller.signal});
+      clearTimeout(timer);
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      const text = await response.text();
+      if (!text.includes("<") || text.toLowerCase().includes("<html")) throw new Error("Réponse non XML");
+      return parseFeed(text, feed);
+    } catch (err) { lastError = err; }
+  }
+  throw lastError || new Error("Flux inaccessible");
+}
+
+function dateLabel(date) {
+  if (!date) return "Source externe";
+  const parsed = new Date(date);
+  return Number.isNaN(parsed.getTime()) ? "Source externe" :
+    parsed.toLocaleDateString("fr-FR", {day:"numeric",month:"short"});
+}
+
+function renderNews() {
+  const filtered = allNews.filter(n => currentFilter === "Tout" || n.category === currentFilter);
+  $("count").textContent = filtered.length + " article" + (filtered.length > 1 ? "s" : "");
+  $("news").innerHTML = "";
+  if (!filtered.length) {
+    $("news").innerHTML = '<div class="empty">Aucun article dans cette catégorie pour le moment. Essaie « Tout » ou actualise les sources.</div>';
+    return;
+  }
+  filtered.forEach((n, index) => {
+    const card = document.createElement("article");
+    card.className = "card" + (index === 0 ? " featured" : "");
+    const tag = document.createElement("div"); tag.className = "tag"; tag.textContent = n.category + " · " + n.source;
+    const title = document.createElement("h3"); title.textContent = n.title;
+    const desc = document.createElement("p"); desc.textContent = n.description || "Ouvre la source pour lire le contexte complet.";
+    const bottom = document.createElement("div"); bottom.className = "bottom";
+    const small = document.createElement("small"); small.textContent = dateLabel(n.date);
+    const btn = document.createElement("button"); btn.className = "read"; btn.textContent = "Comprendre ↗";
+    btn.addEventListener("click", () => openArticle(n));
+    bottom.append(small,btn); card.append(tag,title,desc,bottom); $("news").append(card);
+  });
+}
+
+function openArticle(n) {
+  $("modalcat").textContent = n.category + " · " + n.source;
+  $("modaltitle").textContent = n.title;
+  $("modaldesc").textContent = n.description || "Lis l'article original pour obtenir tous les détails.";
+  $("modalsource").textContent = n.source;
+  $("modallink").href = n.link;
+  $("article").showModal();
+}
+
+$("close").addEventListener("click", () => $("article").close());
+$("article").addEventListener("click", e => {
+  if (e.target === $("article")) $("article").close();
+});
+
+$("filters").addEventListener("click", e => {
+  const btn = e.target.closest("[data-filter]");
+  if (!btn) return;
+  currentFilter = btn.dataset.filter;
+  document.querySelectorAll(".filter").forEach(b => b.classList.toggle("active", b === btn));
+  renderNews();
+});
+
+async function refreshNews() {
+  $("refresh").disabled = true;
+  $("refresh").textContent = "Actualisation…";
+  $("status").textContent = "Connexion aux flux RSS publics en cours…";
+  const results = await Promise.allSettled(feeds.map(fetchFeed));
+  const success = results.filter(r => r.status === "fulfilled").flatMap(r => r.value);
+  const failed = results.filter(r => r.status === "rejected").length;
+  const seen = new Set();
+  allNews = success.filter(n => {
+    const key = n.title.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+  if (allNews.length) {
+    $("edition").textContent = "Mis à jour le " + new Date().toLocaleString("fr-FR",{dateStyle:"short",timeStyle:"short"});
+    $("status").textContent = allNews.length + " titres récupérés depuis les flux. " +
+      (failed ? failed + " source(s) inaccessible(s) : les filtres peuvent donc être incomplets." : "Toutes les sources ont répondu.") +
+      " Vérifie toujours les articles originaux.";
+    renderNews();
+  } else {
+    $("status").textContent = "Impossible de récupérer les flux directement depuis cette page. Cela peut venir des restrictions réseau ou des proxys publics. Réessaie plus tard ; utilise les liens des médias dans « Nos sources ».";
+    $("news").innerHTML = '<div class="card featured"><div class="tag">Sources externes</div><h3>Les flux ne répondent pas pour le moment</h3><p>Certains médias bloquent la lecture automatique dans un navigateur. Tu peux consulter directement leurs sites via les liens en bas de page.</p><a href="https://www.franceinfo.fr/" target="_blank" rel="noopener">Ouvrir Franceinfo ↗</a><br><a href="https://www.lemonde.fr/" target="_blank" rel="noopener">Ouvrir Le Monde ↗</a><br><a href="https://www.bbc.com/news" target="_blank" rel="noopener">Ouvrir BBC News ↗</a></div>';
+  }
+  $("refresh").disabled = false;
+  $("refresh").textContent = "↻ Actualiser les sources";
+}
+$("refresh").addEventListener("click", refreshNews);
+
+function addMessage(text, who) {
+  const el = document.createElement("div");
+  el.className = "msg" + (who === "user" ? " user" : "");
+  el.textContent = text;
+  $("messages").append(el);
+  $("messages").scrollTop = $("messages").scrollHeight;
+}
+function answerQuestion(q) {
+  const text = q.toLowerCase();
+  if (/manifestation|grève|lycéen|protest/.test(text))
+    return "Pour comprendre une manifestation, regarde quatre éléments :\n1. Les revendications précises des participants.\n2. Les décisions ou annonces du gouvernement.\n3. Les chiffres, en vérifiant qui les publie et comment ils sont calculés.\n4. Les conséquences sur les personnes concernées.\n\nCompare plusieurs sources et distingue les faits confirmés, les déclarations et les analyses. Je ne suis pas encore connecté à une IA en direct : ouvre les articles de la rubrique Actualités pour analyser un événement précis.";
+  if (/bonnes nouvelles|positif|bonne nouvelle/.test(text))
+    return "Pour trouver des nouvelles positives vérifiables, explore les rubriques sciences de Science, les actualités de l'ONU et Good News Network. Une bonne nouvelle doit, elle aussi, être datée et sourcée.";
+  if (/budget|dette|économie|inflation/.test(text))
+    return "Pour comprendre une actualité économique, distingue le budget prévu des dépenses réelles, le déficit annuel de la dette accumulée et les annonces politiques des chiffres publiés par des organismes statistiques. Compare plusieurs sources et consulte les données originales.";
+  if (/climat|biodiversité|environnement/.test(text))
+    return "Pour une actualité environnementale, cherche les données mesurées, la période étudiée, la zone géographique et les limites de l'étude. Les annonces et les objectifs ne sont pas toujours des résultats déjà obtenus. Consulte aussi les sources scientifiques.";
+  if (/source|fiable|vérifier|vérification/.test(text))
+    return "Pour vérifier une information : retrouve la publication originale, vérifie la date, compare au moins deux médias indépendants et cherche les données primaires. Fais attention aux titres sortis de leur contexte. Cette version ne vérifie pas automatiquement les faits.";
+  if (/bonjour|salut|hello/.test(text))
+    return "Salut ! Pose-moi une question sur les manifestations, l'économie, l'environnement ou la vérification des sources. Je suis encore un assistant préprogrammé, pas une IA connectée.";
+  return "Je peux proposer une méthode pour analyser l'actualité, mais je ne peux pas encore générer une réponse à partir de toutes les dernières informations. Essaie une question sur les manifestations, l'économie, l'environnement, les bonnes nouvelles ou la fiabilité des sources. Pour une vraie IA, il faudra connecter un service sécurisé côté serveur.";
+}
+$("chatform").addEventListener("submit", e => {
+  e.preventDefault();
+  const q = $("question").value.trim();
+  if (!q) return;
+  addMessage(q,"user");
+  $("question").value = "";
+  addMessage(answerQuestion(q),"bot");
+});
+refreshNews();
+setInterval(refreshNews, 30 * 60 * 1000);
+</script>
+</body>
+</html>
